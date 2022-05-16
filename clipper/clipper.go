@@ -1,6 +1,7 @@
 package clipper
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os/exec"
@@ -15,6 +16,10 @@ type Clipper struct {
 }
 
 func (c *Clipper) Run() error {
+	if c.StartSecond > c.EndSecond {
+		return errors.New("start time cannot be after end time")
+	}
+
 	ytCmd := exec.Command("youtube-dl", "-g", "https://www.youtube.com/watch?v="+c.YoutubeId, "-f", "140")
 	audioStreamURL, err := ytCmd.Output()
 	if err != nil {

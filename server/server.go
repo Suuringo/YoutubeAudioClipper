@@ -30,6 +30,11 @@ func getClip(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if clipParams.StartSecond > clipParams.EndSecond {
+		http.Error(w, "start time cannot be after end time", http.StatusBadRequest)
+		return
+	}
+
 	if clipParams.EndSecond-clipParams.StartSecond > 20 {
 		http.Error(w, "clip can't be more than 20 seconds long", http.StatusBadRequest)
 		return
