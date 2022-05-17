@@ -12,6 +12,8 @@ import (
 	"github.com/Suuringo/voice-clip-studio/clipper"
 )
 
+var AllowedOrigins = "*"
+
 func GetServer() *http.ServeMux {
 	mux := http.NewServeMux()
 
@@ -21,7 +23,7 @@ func GetServer() *http.ServeMux {
 }
 
 func getClip(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", AllowedOrigins)
 	var clipParams clipper.Clipper
 
 	err := json.NewDecoder(r.Body).Decode(&clipParams)
